@@ -1,0 +1,26 @@
+server:
+  port: 8080
+  
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: movieRoute 
+          uri: lb://movie-service 
+          predicates: 
+            - Path=/movies/**
+        - id: catalogRoute 
+          uri: lb://catalog-service 
+          predicates: 
+            - Path=/catalogs/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+info:
+  app:
+    name: gateway-service
+    description: Gateway Service 
+    version: 1.0.0
